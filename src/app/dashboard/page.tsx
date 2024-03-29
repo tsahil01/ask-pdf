@@ -27,7 +27,7 @@ export default function Dashboard() {
         <MaxWidthWrapper>
             <div className="flex flex-col mt-5">
                 <div className="text-2xl font-bold">Your Docs:</div>
-                <div>{JSON.stringify(session)}</div>
+                {/* <div>{JSON.stringify(session)}</div> */}
             </div>
         </MaxWidthWrapper>
     );
