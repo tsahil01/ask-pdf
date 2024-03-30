@@ -1,19 +1,6 @@
+import { NEXT_AUTH } from "@/app/lib/auth";
 import NextAuth from "next-auth/next";
-import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID || "",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
-        }),
-
-    ],
-    callbacks: {
-        async redirect( {url, baseUrl }) {
-            return Promise.resolve(baseUrl + '/dashboard');
-        }
-    }
-})
+const handler = NextAuth(NEXT_AUTH)
 
 export { handler as GET, handler as POST };
