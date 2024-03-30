@@ -14,12 +14,32 @@ datasource db {
 }
 
 model User {
-id                        String        @id             @unique
-email                     String        @unique
+  id    String @id @unique
+  email String @unique
+  File  File[]
 
-stripCustomerId           String?       @unique         @map(name: "stripe_customer_id")
-stripSubscriptionId       String?       @unique         @map(name: "stripe_subscription_id")
-stripPriceId              String?       @map(name: "strip_price_id")
-stripCurrentPeriodEnd     DateTime?     @map(name: "strip_current_period_id")
+  stripCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripPriceId          String?   @map(name: "strip_price_id")
+  stripCurrentPeriodEnd DateTime? @map(name: "strip_current_period_id")
+}
 
+enum UploadStatus {
+  PENDING
+  PROCESSING
+  FAILED
+  SUCCESS
+}
+
+model File {
+  id           String       @id @default(uuid())
+  name         String
+  uploadstatus UploadStatus @default(PENDING)
+  url          String
+  key          String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
