@@ -1,3 +1,4 @@
+import prisma from "@/db";
 import GoogleProvider from "next-auth/providers/google";
 
 export const NEXT_AUTH = {
@@ -11,10 +12,38 @@ export const NEXT_AUTH = {
     callbacks: {
 
         async signIn({ user, account, profile }: any) {
-            console.log("USER: " , user)
-            console.log("ACCOUNT: " , account)
-            console.log("PROFILE: " , profile)
-            return user
+            // console.log("USER: " , user)
+            // console.log("ACCOUNT: " , account)
+            // console.log("PROFILE: " , profile)
+            
+            // do db logic here and return false or true
+
+            try{
+                const findUser = await prisma.user.findFirst({
+                    where: {
+                        id : user.id 
+                    }
+                });
+                
+                if( !findUser ){
+                    const newUser = await prisma.user.create({
+                        data: {
+                            id: user.id,
+                            email: user.email
+                        }
+                    })
+                    console.log("New User: ", newUser);
+                    return true;
+                }
+                else {
+                    console.log("User already exist.")
+                    return true;
+                }
+
+            } catch(e){
+                console.log(e);
+                return false;
+            }
         },
         
         async redirect( {url, baseUrl }: { url: string, baseUrl: string }) {
