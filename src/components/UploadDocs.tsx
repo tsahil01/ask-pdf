@@ -1,21 +1,12 @@
-"use client";
-
 import { UploadCloud } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export default function UploadDoc(){
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     return <>
-    <Dialog open={isOpen}
-        onOpenChange={(v)=>{
-            if(!v) {
-                setIsOpen(v)
-            }
-        }}>
-      <DialogTrigger onClick={()=>setIsOpen(true)} asChild>
-        <Button className="" variant={"outline"}>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="flex gap-2" variant={"outline"}>
             Upload PDF <UploadCloud/>
         </Button>
       </DialogTrigger>
