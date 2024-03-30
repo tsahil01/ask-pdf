@@ -1,8 +1,13 @@
+
 import { Trash2Icon } from "lucide-react"
 import { Button } from "./ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { useRecoilValue } from "recoil"
+import { filesAtom } from "@/atom/filesAtom"
 
 export function DashboardFiles(){
+    const getFiles = useRecoilValue(filesAtom);
+    console.log("FILESSSSSSS: ", getFiles)
     return <>
     <div className="grid md:grid-cols-3 gap-4 w-full">
         <EachDoc name="Some name" date="23 March 2024"/>
