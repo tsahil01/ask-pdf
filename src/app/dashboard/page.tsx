@@ -5,6 +5,8 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
+import { DashboardFiles } from "@/components/DashboardFiles";
+import UploadDoc from "@/components/UploadDocs";
 
 export default function Dashboard() {
     const { data: session, status } = useSession();
@@ -13,7 +15,8 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            router.push('/');
+            // router.push('/');
+            setLoading(false)
         } else if (status === "authenticated") {
             setLoading(false);
         }
@@ -24,10 +27,15 @@ export default function Dashboard() {
     }
 
     return (
-        <MaxWidthWrapper>
-            <div className="flex flex-col mt-5">
-                <div className="text-2xl font-bold">Your Docs:</div>
-                <div>{JSON.stringify(session)}</div>
+        <MaxWidthWrapper className="px-4 overflow-auto  ">
+            <div className="flex flex-col mt-5 gap-4">
+                <div className="flex flex-row justify-between">
+                    <div className="md:text-5xl text-3xl font-bold my-auto">My Docs:</div>
+                    <UploadDoc/>
+                </div>
+                <div className="flex mt-9">
+                    <DashboardFiles/>
+                </div>
             </div>
         </MaxWidthWrapper>
     );

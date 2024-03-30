@@ -2,6 +2,8 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { User } from "./User";
+import { Button } from "./ui/button";
+import { LogIn, LogOut } from "lucide-react";
 
 export function Navbar(){
 
@@ -18,11 +20,11 @@ export function Navbar(){
             <div className="flex flex-row p-2 gap-2">
                 { session.status == "unauthenticated"
                 ?
-                <button className="my-auto border p-1 rounded-lg font-bold hover:bg-zinc-200" onClick={()=>signIn()}>Sign in</button>
+                <Button className="flex gap-1 p-1" variant={"outline"} onClick={()=>signIn()}>Sign in <LogIn/></Button>
                 : 
                 <>
                 <User email={ session.data?.user?.email || "" } name={ session.data?.user?.name || "" } image={ session.data?.user?.image || "" } />
-                <button className="my-auto border p-1 rounded-lg font-bold hover:bg-zinc-200" onClick={()=>signOut()}>Sign out</button>
+                <Button className="flex gap-1 p-1" variant={"outline"} onClick={()=>signOut()}>Sign out <LogOut/></Button>
                 </>      
                 }
             </div>

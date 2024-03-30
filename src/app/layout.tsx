@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en" className="light">
       <body className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable, "overflow-hidden"
+          fontSans.variable, "overflow-x-hidden"
         )}>
           <Providers>
             <Navbar/>
