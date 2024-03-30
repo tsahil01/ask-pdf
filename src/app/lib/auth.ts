@@ -7,8 +7,9 @@ export const NEXT_AUTH = {
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
         }),
-
     ],
+    secret: process.env.NEXTAUTH_SECRET,
+    
     callbacks: {
 
         async signIn({ user, account, profile }: any) {
@@ -62,3 +63,33 @@ export const NEXT_AUTH = {
           }
     }
 }
+
+
+
+
+// try{
+//     const userFiles = await prisma.file.findMany({
+//         where: {
+//             userId: user.id
+//         }
+//     });
+//     console.log("User Files: ", userFiles);
+//     return true;
+
+// } catch(e){
+//     console.log(e);
+//     return false;
+// }
+
+// const newfile = await prisma.file.create({
+//     data: {
+//         name: "New Fileeee",
+//         uploadstatus: "SUCCESS",
+//         url: "example.com",
+//         key: "exam",
+//         User: {
+//             connect: {id: user.id}
+//         }
+//     }
+// })
+// console.log(newfile);
