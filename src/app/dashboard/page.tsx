@@ -7,18 +7,32 @@ import { useRouter } from "next/navigation";
 import Loading from "../loading";
 import { DashboardFiles } from "@/components/DashboardFiles";
 import UploadDoc from "@/components/UploadDocs";
+import { fetchFiles } from "../actions";
+import { useSetRecoilState } from "recoil";
+import { filesAtom } from "@/atom/filesAtom";
 
 export default function Dashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const setFilesData = useSetRecoilState(filesAtom);
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            // router.push('/');
-            setLoading(false)
+            router.push('/');
+            // setLoading(false)
+
         } else if (status === "authenticated") {
-            setLoading(false);
+            const callit = async () => {
+                const data = await getData();
+                
+                // @ts-ignore
+                setFilesData(data);
+                setLoading(false);
+            };
+
+            callit();
+            
         }
     }, [status, router]);
 
@@ -39,4 +53,8 @@ export default function Dashboard() {
             </div>
         </MaxWidthWrapper>
     );
+}
+
+async function getData() {
+    return await fetchFiles();
 }
