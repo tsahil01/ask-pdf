@@ -11,9 +11,8 @@ export default function DeleteBtn({ id }: { id: string }) {
     setLoading(true);
     try {
       const res = await deleteFile(id);
-      // Handle success
     } catch (error) {
-      // Handle error
+        console.log("error in delete btn: ",error);
     } finally {
       setLoading(false);
     }
