@@ -20,10 +20,26 @@ export async function fetchFiles() {
             }
         });
 
-        // console.log("User Files: ", userFiles);
+        console.log("User Files: ", userFiles); 
         return userFiles;
     } catch (e) {
         console.error("Error fetching files: ", e);
         return [];
+    }
+}
+
+export async function deleteFile(id:string) {
+    try {
+
+        const del = await prisma.file.delete({
+            where: {
+                id
+            }
+        })
+
+        console.log("Delete response: ", del); 
+
+    } catch (e) {
+        console.error("Error deleting file: ", e);
     }
 }
