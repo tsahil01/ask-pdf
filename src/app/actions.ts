@@ -6,7 +6,7 @@ import { NEXT_AUTH } from "./lib/auth";
 
 export async function fetchFiles() {
     const session = await getServerSession(NEXT_AUTH);
-    console.log("session: ", session);
+    // console.log("session: ", session);
     try {
 
         if (!session?.user?.id) {
@@ -20,10 +20,10 @@ export async function fetchFiles() {
             }
         });
 
-        console.log("User Files: ", userFiles);
+        // console.log("User Files: ", userFiles);
         return userFiles;
     } catch (e) {
-        console.error("Error fetching files:", e);
-        return []; // Returning an empty array may be more appropriate than ["err"]
+        console.error("Error fetching files: ", e);
+        return [];
     }
 }

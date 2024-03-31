@@ -20,7 +20,6 @@ export default function Dashboard() {
     useEffect(() => {
         if (status === "unauthenticated") {
             router.push('/');
-            // setLoading(false)
 
         } else if (status === "authenticated") {
             const callit = async () => {
