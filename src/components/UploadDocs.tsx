@@ -1,6 +1,7 @@
 import { UploadCloud } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import UploadDropZone from "./UploadDropZone";
 
 export default function UploadDoc(){
     return <>
@@ -15,8 +16,9 @@ export default function UploadDoc(){
         <DialogHeader>
           <DialogTitle>Upload File</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Upload your PDF file here.
           </DialogDescription>
+          <UploadDropZone/>
         </DialogHeader>
 
         <DialogFooter>
