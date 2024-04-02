@@ -20,10 +20,6 @@ export default function UploadDoc(){
           </DialogDescription>
           <UploadDropZone/>
         </DialogHeader>
-
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
     
