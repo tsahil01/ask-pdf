@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Loading from "../loading";
 import { DashboardFiles } from "@/components/DashboardFiles";
 import UploadDoc from "@/components/UploadDocs";
-import { fetchFiles } from "../actions";
+import { fetchFiles } from "../actions/db";
 import { useSetRecoilState } from "recoil";
 import { filesAtom } from "@/atom/filesAtom";
 

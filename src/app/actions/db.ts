@@ -2,7 +2,7 @@
 
 import prisma from "@/db";
 import { getServerSession } from "next-auth";
-import { NEXT_AUTH } from "./lib/auth";
+import { NEXT_AUTH } from "../lib/auth";
 
 export async function fetchFiles() {
     const session = await getServerSession(NEXT_AUTH);
@@ -30,7 +30,6 @@ export async function fetchFiles() {
 
 export async function deleteFile(id:string) {
     try {
-
         const del = await prisma.file.delete({
             where: {
                 id
@@ -38,7 +37,6 @@ export async function deleteFile(id:string) {
         })
 
         console.log("Delete response: ", del); 
-
     } catch (e) {
         console.error("Error deleting file: ", e);
     }
