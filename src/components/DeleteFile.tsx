@@ -1,4 +1,4 @@
-import { deleteFile } from "@/app/actions/actions";
+import { deleteFile } from "@/app/actions/db";
 import { Button } from "./ui/button";
 import { Trash2Icon } from "lucide-react";
 import { useState } from "react";
