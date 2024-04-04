@@ -1,24 +1,72 @@
+import { useUploadThing } from '@/app/lib/uploadThing';
 import Loading from '@/app/loading';
 import { ArrowBigDown, ArrowBigDownDashIcon, File, UploadCloudIcon } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useToast } from './ui/use-toast';
+import { addFiles } from '@/app/actions/db';
 
 export default function UploadDropZone() {
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const { toast } = useToast()
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        // Set the dropped files to state
+    const { startUpload } = useUploadThing("pdfUploader")    
+
+    const onDrop = useCallback(async (acceptedFiles: File[]) => {
+        // Filter out non-PDF files
+        const pdfFiles = acceptedFiles.filter(file => file.type === 'application/pdf');
+
+        // If no PDF files were dropped, show error message
+        if (pdfFiles.length === 0) {
+            toast({
+                title: "Invalid file type",
+                description: "Please upload only PDF files.",
+            });
+            return;
+        }
+
         setDroppedFiles(acceptedFiles);
-        // Start the upload process
         setIsUploading(true);
-        // Simulate an upload process (you may replace this with your actual upload logic)
 
         // Do backend logic of uploding here
-        setTimeout(() => {
-            // Finish the upload process
+
+        const res = await startUpload(acceptedFiles);
+        if(!res){
             setIsUploading(false);
-        }, 2000); // Simulating a 2-second upload process
+            return toast({
+                title: "Something went wrong while uploading",
+                description: "Please try again after some time."
+            })
+        }
+
+        const [fileResponse] = res;
+        const key = fileResponse?.key;
+
+        if(!key){
+            setIsUploading(false);
+            return toast({
+                title: "Something went wrong while uploading. Key err.",
+                description: "Please try again after some time."
+            })
+        }
+
+        console.log("Res: ", res);
+        console.log("Key: ", key);
+        console.log("fileResponse: ", fileResponse);
+        const name = fileResponse.name;
+        const url = fileResponse.url;
+        const uploadRes = await addFiles(name, url, key);
+
+        if(uploadRes == "success"){
+            toast({
+                title: "File uploaded successfully",
+                description: "Your file has been uploaded successfully."
+            })
+        }
+        await setIsUploading(false);
+        
+
     }, []);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, multiple: false});
