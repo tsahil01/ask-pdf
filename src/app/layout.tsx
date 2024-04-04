@@ -5,6 +5,7 @@ import { cn } from "./lib/utils";
 import { Inter as FontSans } from "next/font/google"
 import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/providers";
+import { Toaster } from "@/components/ui/toaster";
 
  
 const fontSans = FontSans({
@@ -25,10 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable, "overflow-x-hidden"
+        "min-h-screen bg-background font-sans antialiased",
+        fontSans.variable, "overflow-x-hidden"
         )}>
           <Providers>
+          <Toaster />
             <Navbar/>
             {children}
           </Providers>
