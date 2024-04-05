@@ -92,3 +92,18 @@ export async function addFiles(name: string, url: string, key: string) {
         }
     }
 }
+
+export async function getFile(id: string) {
+    try {
+        const file = await prisma.file.findUnique({
+            where: {
+                id
+            }
+        });
+        console.log("File: ", file); 
+        return file;
+    } catch (e) {
+        console.error("Error fetching file: ", e);
+        return null;
+    }
+}
