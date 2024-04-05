@@ -33,7 +33,7 @@ function EachDoc({id, name, date, opened, del, keyuploadthing }: { id: string; n
             <CardDescription className="text-xs">Last Opened: {date.toDateString()}</CardDescription>
         </CardHeader>
         <CardFooter className="flex justify-between">
-            <Button onClick={()=>router.push(`/document/${id}`)}>Open</Button>
+            <Button onClick={()=>router.push(`/dashboard/${id}`)}>Open</Button>
             <DeleteBtn id = { id } uploadthingKey= {keyuploadthing}/>
 
         </CardFooter>
