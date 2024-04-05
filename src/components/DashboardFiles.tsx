@@ -16,13 +16,14 @@ export function DashboardFiles() {
                     id={file.id}
                     name={file.name}
                     date={file.createdAt}
+                    keyuploadthing={file.key}
                 />
             ))}
         </div>
     );
 }
 
-function EachDoc({id, name, date, opened, del }: { id: string; name: string; date: Date; opened?: string; del?: string; }){
+function EachDoc({id, name, date, opened, del, keyuploadthing }: { id: string; name: string; date: Date; opened?: string; del?: string; keyuploadthing: string}){
     const router = useRouter();
     return <>
     
@@ -33,7 +34,7 @@ function EachDoc({id, name, date, opened, del }: { id: string; name: string; dat
         </CardHeader>
         <CardFooter className="flex justify-between">
             <Button onClick={()=>router.push(`/dashboard/${id}`)}>Open</Button>
-            <DeleteBtn id = { id }/>
+            <DeleteBtn id = { id } uploadthingKey= {keyuploadthing}/>
 
         </CardFooter>
     </Card>

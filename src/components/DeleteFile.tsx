@@ -4,10 +4,13 @@ import { Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import Loading from "@/app/loading";
 
-export default function DeleteBtn({ id }: { id: string }) {
+export default function DeleteBtn({ id, uploadthingKey }: { id: string; uploadthingKey: string}) {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
+    console.log("delete btn clicked");
+    console.log("id: ",id);
+    console.log("uploadthingKey: ",uploadthingKey);
     setLoading(true);
     try {
       const res = await deleteFile(id);
