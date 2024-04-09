@@ -29,7 +29,7 @@ function EachDoc({id, name, date, opened, del, keyuploadthing }: { id: string; n
     
     <Card className="w-full">
         <CardHeader>
-            <CardTitle>{name}</CardTitle>
+            <CardTitle className="truncate">{name}</CardTitle>
             <CardDescription className="text-xs">Last Opened: {date.toDateString()}</CardDescription>
         </CardHeader>
         <CardFooter className="flex justify-between">
