@@ -30,6 +30,10 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
       const fetchData = async () => {
           if (status === "unauthenticated") {
               setLoading(false);
+              toast({
+                title: "You are not logged in",
+                description: "Please log in to view this document"
+            });
               router.push('/');
           } else if (status === "authenticated") {
               try {
@@ -59,11 +63,14 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
           }
       };
   
-      if (status === "authenticated") {
+      if (status != "loading") {
           fetchData();
       }
   
   }, [status, session?.user?.id, params.docId, router]);
+
+  if(status==="loading") return <Loading />;
+  
   
     return (
     <>
