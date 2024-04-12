@@ -26,6 +26,8 @@
     "react-dropzone": "^14.2.3",
     "react-markdown": "^9.0.1",
     "recoil": "^0.7.7",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.7.0"

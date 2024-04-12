@@ -32,7 +32,8 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
               setLoading(false);
               toast({
                 title: "You are not logged in",
-                description: "Please log in to view this document"
+                description: "Please log in to view this document",
+                variant: "destructive"
             });
               router.push('/');
           } else if (status === "authenticated") {
@@ -80,10 +81,11 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
 }
 
 function NotFound() {
-  return (
-    <div className="flex flex-col items-center justify-center h-100">
-      <h1 className="text-2xl font-bold text-center">404</h1>
-      <p className="text-center">Document not found</p>
-    </div>
-  );
-}
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold text-center">404</h1>
+        <p className="text-center">Document not found</p>
+      </div>
+    );
+  }
+  

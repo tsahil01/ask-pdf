@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { runChat } from '@/app/lib/chat';
 import ReactMarkdown from 'react-markdown'; // Import react-markdown
 import { ChatBoxHeading } from './ChatBoxHeading';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import Loading from '@/app/loading';
 
 interface Message {
     text: string;
@@ -15,6 +18,7 @@ interface PdfRendererProps {
 export function PdfRenderer({ url }: PdfRendererProps): JSX.Element {
     const [messages, setMessages] = useState<Message[]>([]);
     const [userTyping, setUserTyping] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -24,6 +28,10 @@ export function PdfRenderer({ url }: PdfRendererProps): JSX.Element {
     };
 
     useEffect(scrollToBottom, [messages]);
+
+    const handleIframeLoad = () => {
+        setIsLoading(false);
+    };
 
     const handleSendMessage = async (message: string): Promise<void> => {
         // Add user's message to the state
@@ -48,12 +56,14 @@ export function PdfRenderer({ url }: PdfRendererProps): JSX.Element {
     return (
         <div className="grid md:grid-cols-2 w-full">
             <div className=" md:p-4 p-2">
-                <div className="mt-4 rounded-xl">
+                {isLoading && <Loading/>}
+                <div className={`mt-4 rounded-xl ${isLoading ? 'hidden' : ''}`}>
                     <iframe
                         title='pdf-renderer'
-                        className="rounded-2xl w-full  object-cover"
+                        className="rounded-2xl w-full object-cover"
                         src={url}
                         height={800}
+                        onLoad={handleIframeLoad}
                     />
                 </div>
             </div>
@@ -64,16 +74,19 @@ export function PdfRenderer({ url }: PdfRendererProps): JSX.Element {
                         {messages.map((message, index) => (
                             <div
                                 key={index}
-                                className={`rounded-xl px-4 py-2 mb-2 max-w-[700px] overflow-auto ${
+                                className={`rounded-xl px-4 py-2 mb-2 max-w-[800px] overflow-auto ${
                                     message.sender === 'user'
                                         ? 'bg-zinc-700 text-white self-end'
                                         : message.sender === 'typing'
-                                            ? 'bg-zinc-800 text-white self-start'
-                                            : 'bg-zinc-800 text-white self-start'
-                                } `}
-                            >
+                                        ? 'bg-zinc-800 text-white self-start'
+                                        : 'bg-zinc-800 text-white self-start'
+                                    } `}
+                                    >
                                 {message.sender !== 'user'?
-                                <ReactMarkdown>{message.text}</ReactMarkdown>
+                                <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                rehypePlugins={[rehypeRaw]}
+                                >{message.text}</ReactMarkdown>
                                 : message.text}
                             </div>
                         ))}
