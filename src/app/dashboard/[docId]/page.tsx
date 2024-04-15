@@ -2,12 +2,14 @@
 
 import { getFile } from "@/app/actions/db";
 import Loading from "@/app/loading";
+import { pdfTextAtom } from "@/atom/pdfTextAtom";
 import { PdfRenderer } from "@/components/PdfRenderer";
 import { toast } from "@/components/ui/use-toast";
 import { UploadStatus } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 interface File {
     id: string;
@@ -25,6 +27,7 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const [file, setFile] = useState<File | null | undefined>(null);
+    const setPdfUrl = useSetRecoilState(pdfTextAtom);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -48,6 +51,7 @@ export default function DocumentPage({ params }: { params: { docId: string } }) 
                       });
                   } else if (file.uploadstatus === "SUCCESS" && file.userId === session?.user?.id) {
                       setFile(file);
+                      setPdfUrl(file.url);
                   } else {
                       setFile(undefined);
                       toast({
